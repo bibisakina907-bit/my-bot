@@ -6,7 +6,7 @@ VERIFY_TOKEN = "my_verify_token"
 
 @app.route("/")
 def home():
-    return "Messenger Bot is running!"
+    return "OK"
 
 @app.route("/webhook", methods=["GET"])
 def verify():
@@ -15,14 +15,13 @@ def verify():
     challenge = request.args.get("hub.challenge")
 
     if mode == "subscribe" and token == VERIFY_TOKEN:
-        return challenge
-    return "Verification failed", 403
+        return challenge, 200
+
+    return "Failed", 403
+
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    data = request.get_json()
-    print(data)
-
     return "ok", 200
 
 
